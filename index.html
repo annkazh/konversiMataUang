@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Aplikasi Kurs Mata Uang</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+	<div class="container mt-5">
+		<div class="col-md-8 offset-md-2">
+			<!-- Default form contact -->
+			<form class="text-center border border-light p-5" class="needs-validation" novalidate>
+
+				<p class="h4 mb-4">Konversi Mata Uang</p>
+
+				<input type="text" id="nilaiAwal" class="form-control mb-4" placeholder="Masukkan Nominal" required>
+
+				<!-- Subject -->
+				<label>Mata Uang</label>
+				<select class="browser-default custom-select mb-4" id="mataUang">
+					<option value="" selected="">Pilih Satu</option>
+					<option value="1">Dollar US</option>
+					<option value="2">Dollar Singapore</option>
+					<option value="3">Ringgit Malaysia</option>
+					<option value="4">Yen Japan</option>
+					<option value="5">Euro</option>
+					<option value="6">Riyal Arab Saudi</option>
+				</select>
+
+				<!-- Message -->
+				<label>Hasil Dalam Rupiah</label>
+				<div class="form-group">
+					<textarea class="form-control rounded-0" id="hasil" rows="3" disabled placeholder="Hasil..."></textarea>
+				</div>
+				<!-- Send button -->
+				<button class="btn btn-info btn-block" id="btn" type="button">Konversikan</button>
+
+			</form>
+			<!-- Default form contact -->
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	<script>
+
+		document.getElementById("btn").addEventListener("click", function() {
+			var mataUang = document.getElementById("mataUang");
+			var nilaiAwal = document.getElementById("nilaiAwal");
+			konversi(nilaiAwal.value, mataUang.value);
+		});
+
+		document.getElementById("mataUang").addEventListener("change", function() {
+			var mataUang = document.getElementById("mataUang");
+			var nilaiAwal = document.getElementById("nilaiAwal");
+			konversi(nilaiAwal.value, mataUang.value);
+		});
+
+		function konversi(nilaiAwal, mataUang){
+			var hasil;
+			var lambang;
+			let dUS 	= 9915;
+			let dSg 	= 13472;
+			let rm 		= 874;
+			let yen 	= 120;
+			let euro 	= 15888;
+			let riyal = 3592;
+
+			if (mataUang == 1) {
+				hasil = nilaiAwal * dUS;
+			}
+
+			else if (mataUang == 2) {
+				hasil = nilaiAwal * dSg;
+			} 
+
+			else if (mataUang == 3) {
+				hasil = nilaiAwal * rm;
+			} 
+
+			else if (mataUang == 4) {
+				hasil = nilaiAwal * yen;
+			} 
+
+			else if (mataUang == 5) {
+				hasil = nilaiAwal * euro;
+			}
+
+			else if (mataUang == 6) {
+				hasil = nilaiAwal * riyal;
+			} 
+
+			else {
+				hasil = "Pilih Mata Uang";
+			}
+
+			document.getElementById("hasil").value = `Rp${cetak(hasil)}`;
+		}
+
+		function cetak(hasil) {
+
+			var	number_string = hasil.toString(),
+			sisa 	= number_string.length % 3,
+			rupiah 	= number_string.substr(0, sisa),
+			ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+
+			if (ribuan) {
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+
+			return rupiah;
+		}
+	</script>
+</body>
+</html>
